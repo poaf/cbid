@@ -14,6 +14,7 @@ window.prices = prices;
 (function() {
     'use strict';
     AWS.config.update(AWSconfig);
+    $("img").hide();
     checkPrices();
 })();
 
@@ -85,13 +86,14 @@ function saveToDB() {
             Key:{
                 "fullname": prices[key].fullname
             },
-            UpdateExpression: "set shortName = :shortName, unitPrice = :unitPrice, price = :price, dimensions = :dimensions, size = :size, auctionUrl = :auctionUrl, updateDate = :updateDate",
+            UpdateExpression: "set shortName = :shortName, unitPrice = :unitPrice, price = :price, dimensions = :dimensions, size = :size, qty = :qty, auctionUrl = :auctionUrl, updateDate = :updateDate",
             ConditionExpression: "attribute_not_exists(fullname) or unitPrice > :unitPrice",
             ExpressionAttributeValues:{
                 ":shortName": prices[key].shortName,
                 ":price": prices[key].price,
                 ":dimensions": prices[key].dimensions ? prices[key].dimensions : 'N/A',
                 ":size": prices[key].size ? prices[key].size : 'N/A',
+                ":qty": prices[key].qty ? prices[key].qty : 'N/A',
                 ":auctionUrl": prices[key].auctionUrl,
                 ":unitPrice": prices[key].unitPrice,
                 ":updateDate": prices[key].updateDate
@@ -159,4 +161,3 @@ function downloadContent(content, fileName) {
 window.dumpPrices = dumpPrices;
 window.downloadContent = downloadContent;
 window.saveToDB = saveToDB;
-
