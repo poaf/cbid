@@ -42,7 +42,7 @@ function autoBuy(price) {
 }
 
 function buyLoop() {
-    let currentPrice = $(".price-amount").attr("data-value");
+    let currentPrice = $('#page-container > div > main > div > section > div.col-xs-12.col-sm-7.col-md-6.lot-col-right > div.rs.lot-bid > span.lot-ff > span > span').attr('data-value');
     console.log(currentPrice);
 
     if (currentPrice > 0 && currentPrice <= targetPrice) {
