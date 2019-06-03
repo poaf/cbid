@@ -4,14 +4,14 @@ var moment = require('moment')
 var router = express.Router();
 var config = require('./../../../config.js')
 
-AWS.config.update(config);
+AWS.config.update(config.AWSconfig);
 
 router.get('/', function(req, res, next) {
   var docClient = new AWS.DynamoDB.DocumentClient();
   var time = new Date().getTime() - (1000*60*60*24*7); //records updated within a week
 
   var params = {
-    'TableName': 'cigarbid',
+    'TableName': config.tableName,
     'FilterExpression' : 'updateDate > :updateDate',
     'ExpressionAttributeValues': {
       ':updateDate' : time

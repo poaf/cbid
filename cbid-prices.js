@@ -13,7 +13,7 @@ window.prices = prices;
 
 (function() {
     'use strict';
-    AWS.config.update(AWSconfig);
+    AWS.config.update(config.AWSconfig);
     $("img").hide();
     checkPrices();
 })();
@@ -82,7 +82,7 @@ function saveToDB() {
     }
     Object.keys(prices).forEach(function(key) {
         var params = {
-            TableName: 'cigarbid',
+            TableName: config.tableName,
             Key:{
                 "fullname": prices[key].fullname
             },

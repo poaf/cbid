@@ -11,14 +11,17 @@ saveToDB()
 ```
 To enable saving to AWS create a config.js file in the root folder with the following:
 ```
-var AWSconfig = {
-	region: "your region",
-	accessKeyId: "your accessKeyId",
-	secretAccessKey: "your accessKeyId"
+var config = {
+	tableName: "your tableName",
+	AWSconfig: {
+		region: "your region",
+		accessKeyId: "your accessKeyId",
+		secretAccessKey: "your secretAccessKey"
+	}
 };
 
 if (typeof module === "object" && module && typeof module.exports === "object") {
-	module.exports = AWSconfig;
+	module.exports = config;
 }
 ```
 This config file is used by both the scripts and the front end.
