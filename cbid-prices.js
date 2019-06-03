@@ -129,7 +129,7 @@ function processDbQueue() {
 
 
 function sleep(time) {
-    return new Promise((resolve) => setTimeout(resolve, time));
+    return new Promise((resolve) => window.setTimeout(resolve, time));
 }
 
 function downloadContent(content, fileName) {
