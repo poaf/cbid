@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  h1(class='center')= title
+  div(class='container')
+    table(id='results', class='table table-striped')
+      thead
+        tr
+          th Name
+          th Dimensions
+          th Qty
+          th Unit
+          th Total
+          th Updated
+      tbody
+        each auction, i in results
+          tr 
+            td: a(href='https://www.cigarbid.com' + auction.auctionUrl, target='_blank') #{auction.shortName}
+            td #{auction.dimensions.replace('(', '').replace(')', '')}
+            td #{auction.qty}
+            td $#{auction.unitPrice.toFixed(2)}
+            td $#{auction.price.toFixed(2)}
+            td #{auction.formattedDate}
+    script.
+      $(document).ready(function () {
+        $('#results').DataTable({
+          pageLength: 25,
+          "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]]
+        });
+      });
