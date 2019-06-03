@@ -1,11 +1,27 @@
 # cbid scripts
-Userscripts to help save money on cbid. Visit [https://www.tampermonkey.net](https://www.tampermonkey.net) to learn more about userscripts.
+Userscripts to help save money on cbid. Visit [https://www.tampermonkey.net](https://www.tampermonkey.net) to learn more about userscripts. The script can also save pricing info to AWS and a front end is included in this project.
 #### cbid-prices
 Adds functionality to the free fall auctions page. Adds lowest price and unit cost display to each item. Auctions can be dumped to a .csv by running the following in the console:
 ```
 dumpPrices()
 ```
-It is recommended to let this script run for a while to record price information, then dumping it to a .csv for browsing.
+Auctions can be saved to an AWS dynamoDB by running:
+```
+saveToDB()
+```
+To enable saving to AWS create a config.js file in the root folder with the following:
+```
+var AWSconfig = {
+	region: "your region",
+	accessKeyId: "your accessKeyId",
+	secretAccessKey: "your accessKeyId"
+};
+
+if (typeof module === "object" && module && typeof module.exports === "object") {
+	module.exports = AWSconfig;
+}
+```
+This config file is used by both the scripts and the front end.
 #### cbid-autobuy
 Buys an item when it falls to or below your target price. Visit a free fall auction page and run the following in the console:
 ```
