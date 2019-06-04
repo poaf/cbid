@@ -16,6 +16,8 @@ window.prices = prices;
     AWS.config.update(config.AWSconfig);
     $("img").hide();
     checkPrices();
+    let id = window.setInterval(saveToDB, 1800000);
+    console.log(`Interval id : ${id}`);
 })();
 
 function checkPrices() {
@@ -106,6 +108,30 @@ function saveToDB() {
     processDbQueue();
 }
 
+function updateDate(request) {
+    let newRequest = {
+        TableName: config.tableName,
+        Key:{
+            "fullname": request.Key.fullname
+        },
+        UpdateExpression: "set updateDate = :updateDate",
+        ExpressionAttributeValues:{
+            ":updateDate": new Date().getTime()
+        },
+        ReturnValues:"UPDATED_NEW"
+    };
+
+    let docClient = new AWS.DynamoDB.DocumentClient();
+    docClient.update(newRequest, function(err, data) {
+        if (err) {
+            console.log(newRequest);
+            console.log("Error", err);
+        } else {
+            console.log("date updated");
+        }
+    });
+}
+
 function processDbQueue() {
     console.log(`${dbQueue.length} records remaining`);
     if (dbQueue.length == 0) {
@@ -115,12 +141,15 @@ function processDbQueue() {
 
     let request = dbQueue.pop();
     let docClient = new AWS.DynamoDB.DocumentClient();
-    console.log(request);
+
     docClient.update(request, function(err, data) {
         if (err) {
-            console.log("Error", err);
+            console.log(err.code);
+            if (err.code == 'ConditionalCheckFailedException') {
+                updateDate(request);
+            }
         } else {
-            console.log("Success", data);
+            console.log("Success");
         }
     });
 

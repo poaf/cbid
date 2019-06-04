@@ -8,7 +8,7 @@ AWS.config.update(config.AWSconfig);
 
 router.get('/', function(req, res, next) {
   var docClient = new AWS.DynamoDB.DocumentClient();
-  var time = new Date().getTime() - (1000*60*60*24*7); //records updated within a week
+  var time = new Date().getTime() - (1000*60*60*24*1); //records updated within a day
 
   var params = {
     'TableName': config.tableName,
