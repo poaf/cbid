@@ -114,9 +114,10 @@ function updateDate(request) {
         Key:{
             "fullname": request.Key.fullname
         },
-        UpdateExpression: "set updateDate = :updateDate",
+        UpdateExpression: "set updateDate = :updateDate, auctionUrl = :auctionUrl",
         ExpressionAttributeValues:{
-            ":updateDate": new Date().getTime()
+            ":updateDate": new Date().getTime(),
+            ":auctionUrl": request.ExpressionAttributeValues[':auctionUrl']
         },
         ReturnValues:"UPDATED_NEW"
     };
@@ -125,9 +126,9 @@ function updateDate(request) {
     docClient.update(newRequest, function(err, data) {
         if (err) {
             console.log(newRequest);
-            console.log("Error", err);
+            console.log(err);
         } else {
-            console.log("date updated");
+            console.log("date/url updated");
         }
     });
 }
