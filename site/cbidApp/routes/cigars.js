@@ -25,7 +25,7 @@ router.get('/', function(req, res, next) {
     data.Items.forEach(function(e){
       e.formattedDate = moment(e.updateDate).format('YYYY/MM/DD HH:mm')
     });
-    res.render('cigars', { title: 'CigarBid', results: data.Items });
+    res.render('cigars', {results: data.Items });
   });
 });
 

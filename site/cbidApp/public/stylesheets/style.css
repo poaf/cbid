@@ -1,5 +1,4 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -9,4 +8,23 @@ a {
 
 .center {
   text-align: center;
+}
+
+.border-black {
+  border-color: black !important;
+}
+
+@media (min-width: 1200px) {
+  .container-desktop {
+    max-width: 1140px;
+  }
+}
+
+.dataTables_wrapper .dataTables_length {
+  float: right !important;
+}
+
+.dataTables_wrapper .dataTables_filter {
+  float: left !important;
+  text-align: left !important;
 }

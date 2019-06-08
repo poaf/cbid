@@ -1,10 +1,11 @@
 extends layout
 
 block content
-  h1(class='center')= title
-  div(class='container')
-    table(id='results', class='table table-striped')
-      thead
+  div(class='container-fluid container-desktop')
+    h4(class='center pt-3 text-dark') Minimum prices for cigarbid freefall auctions. Updated every 15 minutes.
+    hr
+    table(id='results', class='table table-striped table-bordered border-black')
+      thead(class='thead-dark')
         tr
           th Name
           th Dimensions
@@ -14,17 +15,28 @@ block content
           th Updated
       tbody
         each auction, i in results
-          tr 
+          tr
             td: a(href='https://www.cigarbid.com' + auction.auctionUrl, target='_blank') #{auction.shortName}
             td #{auction.dimensions.replace('(', '').replace(')', '')}
             td #{auction.qty}
             td $#{auction.unitPrice.toFixed(2)}
             td $#{auction.price.toFixed(2)}
             td #{auction.formattedDate}
+    div(class='pb-3')
     script.
       $(document).ready(function () {
-        $('#results').DataTable({
+        $('#results').on('init.dt', function() {
+          $('#results_length').addClass('form-group form-inline');
+          $('#results_filter').addClass('form-group form-inline');
+          $('div.dataTables_filter input').addClass('form-control');
+          $('div.dataTables_length select').addClass('form-control');
+        }).DataTable({
           pageLength: 25,
-          "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]]
+          "lengthMenu": [[25, 50, 100, -1], [25, 50, 100, "All"]],
+          language: { 
+            search: 'Search',
+            searchPlaceholder: 'filter cigars',
+            lengthMenu: "View&nbsp;&nbsp; _MENU_",
+          }
         });
       });
